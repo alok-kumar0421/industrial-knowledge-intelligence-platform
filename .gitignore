@@ -55,7 +55,6 @@ Thumbs.db
 
 # Python Bytecode
 *.egg-info/
-.python-version
 
 *.pid
 
