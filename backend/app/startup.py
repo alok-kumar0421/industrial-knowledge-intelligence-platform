@@ -27,7 +27,7 @@ def configure_startup(app: FastAPI) -> None:
     def startup_event() -> None:
         logger.info("🚀 Starting Backend...")
 
-        # initialize_embedding_service()
-        # initialize_vector_store_service()
+        initialize_embedding_service()
+        initialize_vector_store_service()
 
         logger.info("✅ Backend Ready")
