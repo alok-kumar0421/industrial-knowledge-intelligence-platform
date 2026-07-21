@@ -1,0 +1,64 @@
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# Environment Variables
+.env
+.env.*
+
+# Databases
+*.db
+*.sqlite3
+
+# Python Cache
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ===========================
+# Backend Generated Files
+# ===========================
+backend/data/chroma/
+backend/data/embeddings/
+backend/data/uploads/
+
+# Logs
+*.log
+
+# ===========================
+# VS Code
+# ===========================
+.vscode/
+
+# ===========================
+# Node
+# ===========================
+frontend/node_modules/
+frontend/dist/
+
+# ===========================
+# OS Files
+# ===========================
+.DS_Store
+Thumbs.db
+
+# Python Bytecode
+*.egg-info/
+.python-version
+
+*.pid
+
+backend/test_chroma/
+alembic/versions/__pycache__/
+backend/pytest_failure.txt
