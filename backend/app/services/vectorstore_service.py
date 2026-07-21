@@ -138,12 +138,6 @@ class VectorStoreService:
         metadatas = results.get("metadatas", [[]])[0]
         distances = results.get("distances", [[]])[0]
 
-        # logger.info("=" * 60)
-        # logger.info("QUESTION : %s", query_text)
-        # logger.info("VECTOR COUNT : %d", self.collection.count())
-        # logger.info("RETRIEVED : %d", len(documents))
-        # logger.info("=" * 60)
-
         hits = []
 
         for i, doc in enumerate(documents):
