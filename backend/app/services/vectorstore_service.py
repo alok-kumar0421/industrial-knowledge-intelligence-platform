@@ -20,20 +20,18 @@ def get_vector_store_service():
     global _vector_store_service
 
     if _vector_store_service is None:
-        raise RuntimeError("VectorStoreService is not initialized.")
+        logger.info("Lazy loading Chroma Vector Store...")
+        _vector_store_service = VectorStoreService()
 
     return _vector_store_service
 
 
 def initialize_vector_store_service():
-    global _vector_store_service
-
-    if _vector_store_service is None:
-        _vector_store_service = VectorStoreService()
-
-    logger.info("Chroma initialized")
-    logger.info("Collection : %s", CHROMA_COLLECTION)
-    logger.info("Vectors : %d", _vector_store_service.collection.count())
+    """
+    Startup par Chroma initialize nahi hoga.
+    Pehli request par automatically initialize hoga.
+    """
+    logger.info("Vector Store initialized (Lazy Mode)")
 
 
 class VectorStoreService:
@@ -42,9 +40,14 @@ class VectorStoreService:
     _collection = None
 
     def __init__(self):
+        self.client = None
+        self.collection = None
+
+    def _ensure_loaded(self):
+        if self.collection is not None:
+            return
 
         if VectorStoreService._client is None:
-
             logger.info("Opening Chroma Persistent Client")
 
             VectorStoreService._client = chromadb.PersistentClient(
@@ -57,7 +60,6 @@ class VectorStoreService:
         self.client = VectorStoreService._client
 
         if VectorStoreService._collection is None:
-
             logger.info("Opening Collection")
 
             VectorStoreService._collection = self.client.get_or_create_collection(
@@ -66,11 +68,15 @@ class VectorStoreService:
 
         self.collection = VectorStoreService._collection
 
+        logger.info("Chroma collection loaded successfully.")
+
     def add_documents(
         self,
         documents: List[Dict[str, Any]],
         embeddings: Optional[List[List[float]]] = None,
     ) -> None:
+
+        self._ensure_loaded()
 
         if not documents:
             return
@@ -99,6 +105,8 @@ class VectorStoreService:
 
     def delete_by_ids(self, ids: List[str]):
 
+        self._ensure_loaded()
+
         if not ids:
             return
 
@@ -113,6 +121,8 @@ class VectorStoreService:
         query_embedding: Optional[List[float]] = None,
     ) -> List[Dict[str, Any]]:
 
+        self._ensure_loaded()
+
         if not query_text.strip():
             return []
 
@@ -121,16 +131,9 @@ class VectorStoreService:
         }
 
         if query_embedding is not None:
-
-            kwargs["query_embeddings"] = [
-                query_embedding
-            ]
-
+            kwargs["query_embeddings"] = [query_embedding]
         else:
-
-            kwargs["query_texts"] = [
-                query_text
-            ]
+            kwargs["query_texts"] = [query_text]
 
         results = self.collection.query(**kwargs)
 
@@ -141,7 +144,6 @@ class VectorStoreService:
         hits = []
 
         for i, doc in enumerate(documents):
-
             hits.append(
                 {
                     "content": doc,
@@ -153,9 +155,8 @@ class VectorStoreService:
         return hits
 
     def get_stats(self) -> Dict[str, Any]:
-        """
-        Returns basic information about the vector database.
-        """
+
+        self._ensure_loaded()
 
         return {
             "available": True,
@@ -165,9 +166,8 @@ class VectorStoreService:
         }
 
     def reset(self) -> None:
-        """
-        Delete all vectors and recreate the collection.
-        """
+
+        self._ensure_loaded()
 
         logger.warning("Resetting Chroma collection...")
 
