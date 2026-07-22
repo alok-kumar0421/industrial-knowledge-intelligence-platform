@@ -10,6 +10,12 @@
 An AI-powered platform that ingests industrial manuals, SOPs, inspection reports, and maintenance documents, and delivers accurate, <b>citation-backed answers</b> using Retrieval-Augmented Generation (RAG).
 </p>
 
+### 🚀 Live Demo
+**https://ikipeth.netlify.app/**
+
+### 💻 GitHub Repository
+**https://github.com/alok-kumar0421/industrial-knowledge-intelligence-platform**
+
 <!-- BADGES -->
 <p>
   <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
@@ -17,6 +23,7 @@ An AI-powered platform that ingests industrial manuals, SOPs, inspection reports
   <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
   <img src="https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
 </p>
+
 <p>
   <img src="https://img.shields.io/badge/Qdrant-VectorDB-DC244C?style=for-the-badge&logo=qdrant&logoColor=white" alt="Qdrant" />
   <img src="https://img.shields.io/badge/Groq-LLM-F55036?style=for-the-badge&logo=groq&logoColor=white" alt="Groq" />
@@ -24,17 +31,18 @@ An AI-powered platform that ingests industrial manuals, SOPs, inspection reports
   <img src="https://img.shields.io/badge/Netlify-Deployed-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" alt="Netlify" />
   <img src="https://img.shields.io/badge/Render-Backend-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Render" />
 </p>
+
 <p>
   <img src="https://img.shields.io/github/stars/alok-kumar0421/industrial-knowledge-intelligence-platform?style=for-the-badge&color=gold" alt="GitHub Stars" />
   <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="License" />
   <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge" alt="PRs Welcome" />
 </p>
 
-<!-- CTA BUTTONS -->
 <p>
   <a href="https://ikipeth.netlify.app/">
     <img src="https://img.shields.io/badge/🚀_LIVE_DEMO-Visit_Now-2ea44f?style=for-the-badge" alt="Live Demo" />
   </a>
+
   <a href="https://github.com/alok-kumar0421/industrial-knowledge-intelligence-platform">
     <img src="https://img.shields.io/badge/⭐_GITHUB-View_Repository-181717?style=for-the-badge&logo=github" alt="GitHub Repo" />
   </a>
