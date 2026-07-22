@@ -43,11 +43,19 @@ export default function LoginPage({ onLogin }) {
       />
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-[#F2B705]/10 blur-[120px]" />
 
-      <div className="relative z-10 w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-2xl shadow-black/40 backdrop-blur-sm">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+      {/* Card wrapper: simple bordered card on mobile (like the registration screen), two-column panel on desktop */}
+      <div className="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-2xl shadow-black/40 backdrop-blur-sm lg:max-w-5xl">
 
-          {/* Left panel — now order-2 on mobile, order-1 on desktop */}
-          <div className="relative order-2 border-b border-white/10 p-8 sm:p-10 lg:order-1 lg:border-b-0 lg:border-r">
+        {/* Corner brackets — only shown on the compact mobile card */}
+        <span className="pointer-events-none absolute left-3 top-3 h-3 w-3 border-l-2 border-t-2 border-[#F2B705]/70 lg:hidden" />
+        <span className="pointer-events-none absolute right-3 top-3 h-3 w-3 border-r-2 border-t-2 border-[#F2B705]/70 lg:hidden" />
+        <span className="pointer-events-none absolute bottom-3 left-3 h-3 w-3 border-b-2 border-l-2 border-[#F2B705]/70 lg:hidden" />
+        <span className="pointer-events-none absolute bottom-3 right-3 h-3 w-3 border-b-2 border-r-2 border-[#F2B705]/70 lg:hidden" />
+
+        <div className="lg:grid lg:grid-cols-[1.1fr_0.9fr]">
+
+          {/* Left info panel — hidden on mobile, visible from lg up */}
+          <div className="relative hidden border-white/10 p-8 sm:p-10 lg:block lg:border-r">
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#5B9BD5]/10 via-transparent to-transparent" />
 
             <div className="relative mb-8 flex items-center gap-3">
@@ -83,8 +91,8 @@ export default function LoginPage({ onLogin }) {
             </div>
           </div>
 
-          {/* Right panel — now order-1 on mobile, order-2 on desktop */}
-          <div className="order-1 p-8 sm:p-10 lg:order-2">
+          {/* Right panel — the login form itself, always visible */}
+          <div className="relative p-8 sm:p-10">
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <p className="font-['JetBrains_Mono'] text-[11px] tracking-[0.25em] text-[#F2B705]">
@@ -105,6 +113,7 @@ export default function LoginPage({ onLogin }) {
                 <input
                   value={form.username}
                   required
+                  placeholder="rkumar"
                   onChange={(event) => setForm({ ...form, username: event.target.value })}
                   className="mt-2 w-full rounded-lg border border-white/10 bg-[#0B0E11] px-4 py-3 text-white outline-none transition-all duration-200 focus:border-[#F2B705]/60 focus:shadow-[0_0_0_3px_rgba(242,183,5,0.12)]"
                 />
@@ -118,7 +127,7 @@ export default function LoginPage({ onLogin }) {
                   type="password"
                   value={form.password}
                   required
-                  type="password"
+                  placeholder="••••••••"
                   onChange={(event) => setForm({ ...form, password: event.target.value })}
                   className="mt-2 w-full rounded-lg border border-white/10 bg-[#0B0E11] px-4 py-3 text-white outline-none transition-all duration-200 focus:border-[#F2B705]/60 focus:shadow-[0_0_0_3px_rgba(242,183,5,0.12)]"
                 />

@@ -15,7 +15,6 @@ def configure_startup(app: FastAPI) -> None:
     async def startup_event() -> None:
         logger.info("🚀 Starting Backend...")
 
-        # Lazy initialization (No heavy model loading)
         initialize_embedding_service()
         initialize_vector_store_service()
 
