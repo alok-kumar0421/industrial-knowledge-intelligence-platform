@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import os
+# import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from sqlalchemy.orm import Session
 
 from app.core.config import CHUNK_OVERLAP, CHUNK_SIZE, UPLOAD_DIR
+# from app.core.config import UPLOAD_DIR
 from app.db.models import Document, DocumentChunk, User
 from app.services.embedding_service import get_embedding_service
 from app.services.ocr_service import OCRService
@@ -122,10 +123,13 @@ class DocumentService:
         return True
 
     def search(self, query_text: str, owner: Optional[User] = None) -> List[Dict[str, Any]]:
-        query_embedding = None
-        if self.embedding_service.is_available():
-            query_embedding = self.embedding_service.embed_text(query_text)
-        hits = self.vector_store.query(query_text, top_k=5, query_embedding=query_embedding)
+        query_embedding = self.embedding_service.embed_text(query_text)
+
+        hits = self.vector_store.query(
+            query_text,
+            top_k=5,
+            query_embedding=query_embedding,
+        )
         return hits
 
     def _clean_text(self, text: str) -> str:
@@ -134,8 +138,8 @@ class DocumentService:
 
     def _chunk_text(self, text: str) -> List[str]:
         splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
-            chunk_overlap=100,
+            chunk_size=CHUNK_SIZE,
+            chunk_overlap=CHUNK_OVERLAP,
             separators=[
                 "\n\n",
                 "\n",

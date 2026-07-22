@@ -20,8 +20,15 @@ class ChatService:
     def ask(self, *, question: str, user: User) -> Dict[str, Any]:
         if not question.strip():
             raise ValueError("Question is required")
-        retrieved = self.document_service.search(question, owner=user)
-        context = "\n\n".join(hit.get("content", "") for hit in retrieved[:TOP_K])
+        retrieved = self.document_service.search(
+            question,
+            owner=user,
+        )[:TOP_K]
+
+        context = "\n\n".join(
+            hit.get("content", "")
+            for hit in retrieved
+        )
         if not context:
             answer = "I could not find this information inside uploaded documents."
             confidence = 0.0

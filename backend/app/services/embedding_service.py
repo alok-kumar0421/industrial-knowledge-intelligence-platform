@@ -1,22 +1,13 @@
 from __future__ import annotations
 
 import logging
-import os
-from pathlib import Path
 from typing import List
 
-from app.core.config import EMBEDDING_CACHE_DIR, EMBEDDING_MODEL
+from fastembed import TextEmbedding
 
-try:
-    from sentence_transformers import SentenceTransformer
-except ImportError as exc:
-    raise RuntimeError(
-        "sentence-transformers package is required for embeddings"
-    ) from exc
+from app.core.config import EMBEDDING_MODEL
 
 logger = logging.getLogger(__name__)
-
-os.environ.setdefault("HUGGINGFACE_HUB_REQUEST_TIMEOUT", "120")
 
 _embedding_service = None
 
@@ -25,21 +16,18 @@ def get_embedding_service() -> "EmbeddingService":
     global _embedding_service
 
     if _embedding_service is None:
-        logger.info("Lazy loading embedding service...")
+        logger.info("Initializing FastEmbed...")
         _embedding_service = EmbeddingService()
 
     return _embedding_service
 
 
 def initialize_embedding_service() -> None:
-    """
-    Startup par model load nahi hoga.
-    Model first embedding request par automatically load hoga.
-    """
-    logger.info("Embedding service initialized (Lazy Mode)")
+    logger.info("Embedding service ready (FastEmbed Lazy Mode)")
 
 
 class EmbeddingService:
+
     def __init__(self) -> None:
         self.model = None
 
@@ -47,29 +35,41 @@ class EmbeddingService:
         if self.model is not None:
             return
 
-        cache_path = Path(EMBEDDING_CACHE_DIR)
-        cache_path.mkdir(parents=True, exist_ok=True)
-
         logger.info(
-            "Loading SentenceTransformer model: %s",
+            "Loading FastEmbed model: %s",
             EMBEDDING_MODEL,
         )
 
-        self.model = SentenceTransformer(
-            EMBEDDING_MODEL,
-            cache_folder=str(cache_path),
-            local_files_only=False,
+        self.model = TextEmbedding(
+            model_name=EMBEDDING_MODEL,
         )
 
-        logger.info("SentenceTransformer model loaded successfully.")
+        logger.info("FastEmbed model loaded.")
 
     def embed_text(self, text: str) -> List[float]:
         self._ensure_loaded()
-        return self.model.encode(text).tolist()
 
-    def embed_batch(self, texts: List[str]) -> List[List[float]]:
+        embedding = next(
+            self.model.embed([text])
+        )
+
+        return embedding.tolist()
+
+    def embed_batch(
+        self,
+        texts: List[str],
+    ) -> List[List[float]]:
+
         self._ensure_loaded()
-        return self.model.encode(texts).tolist()
+
+        return [
+            emb.tolist()
+            for emb in self.model.embed(texts)
+        ]
 
     def is_available(self) -> bool:
-        return self.model is not None
+        """
+        FastEmbed is always available.
+        The model loads lazily when embed_text() or embed_batch() is called.
+        """
+        return True
