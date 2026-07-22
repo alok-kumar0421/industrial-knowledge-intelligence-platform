@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 # import os
-import re
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -65,7 +65,7 @@ class DocumentService:
         self.db.flush()
         vector_docs: List[Dict[str, Any]] = []
         for idx, chunk in enumerate(chunks):
-            chunk_id = f"{document.id}:{idx}"
+            chunk_id = str(uuid.uuid4())
             chunk_record = DocumentChunk(
                 document_id=document.id,
                 chunk_index=idx,
@@ -116,7 +116,12 @@ class DocumentService:
         document = self.db.query(Document).filter(Document.id == document_id).first()
         if not document or (owner.role != "owner" and document.owner_id != owner.id):
             return False
-        chunk_ids = [f"{document.id}:{chunk.chunk_index}" for chunk in document.chunks]
+        # chunk_ids = [f"{document.id}:{chunk.chunk_index}" for chunk in document.chunks]
+        chunk_ids = [
+            chunk.embedding_id
+            for chunk in document.chunks
+            if chunk.embedding_id
+        ]
         self.vector_store.delete_by_ids(chunk_ids)
         self.db.delete(document)
         self.db.commit()
