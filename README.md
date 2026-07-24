@@ -10,11 +10,40 @@
 An AI-powered platform that ingests industrial manuals, SOPs, inspection reports, and maintenance documents, and delivers accurate, <b>citation-backed answers</b> using Retrieval-Augmented Generation (RAG).
 </p>
 
-### 🚀 Live Demo
-**https://ikipeth.netlify.app/**
+## 🚀 Live Demo
 
-### 💻 GitHub Repository
-**https://github.com/alok-kumar0421/industrial-knowledge-intelligence-platform**
+<a href="https://ikipeth.netlify.app/" target="_blank">
+  <img src="https://img.shields.io/badge/🚀%20TRY%20LIVE%20DEMO-CLICK%20HERE-FFC107?style=for-the-badge&logo=netlify&logoColor=black" alt="Live Demo"/>
+</a>
+
+### 🌐 https://ikipeth.netlify.app/
+
+> **⭐ Experience the complete Industrial Knowledge Intelligence Platform online.**
+
+---
+
+## 💻 GitHub Repository
+
+<a href="https://github.com/alok-kumar0421/industrial-knowledge-intelligence-platform">
+<img src="https://img.shields.io/badge/GitHub-View%20Repository-181717?style=for-the-badge&logo=github"/>
+</a>
+
+### 🔗 https://github.com/alok-kumar0421/industrial-knowledge-intelligence-platform
+
+</div>
+
+> [!IMPORTANT]
+> ## Registration Required
+>
+> New users **cannot log in immediately after registration**.
+>
+> After creating an account, please contact the **Owner** to approve your registration.
+>
+> **Once your request has been approved, you can log in to the platform.**
+>
+> **Approval Contact**
+>
+> 📧 **Email:** **aloknokha01@gmail.com**
 
 <!-- BADGES -->
 <p>
@@ -352,50 +381,60 @@ cd industrial-knowledge-intelligence-platform
 
 ## 🔐 Environment Variables
 
-Create a `.env` file inside the **backend/** directory using the template below:
+Create the following environment files before running the project.
+
+### Backend (`backend/.env`)
 
 ```env
 # ------------------------------
-# 🔑 App Configuration
+# Application
 # ------------------------------
-APP_ENV=development
-APP_PORT=8000
+APP_TITLE=Industrial Knowledge Intelligence Platform
+API_PREFIX=/api/v1
 
 # ------------------------------
-# 🗄️ Database (Neon PostgreSQL)
+# JWT Authentication
 # ------------------------------
-DATABASE_URL=postgresql://<user>:<password>@<neon-host>/<dbname>?sslmode=require
-
-# ------------------------------
-# 🔐 JWT Authentication
-# ------------------------------
-JWT_SECRET_KEY=your_super_secret_key
+JWT_SECRET=your_jwt_secret
 JWT_ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 # ------------------------------
-# 🧠 AI / LLM Configuration
+# AI Configuration
 # ------------------------------
 GROQ_API_KEY=your_groq_api_key
 GROQ_MODEL=llama-3.3-70b-versatile
 
 # ------------------------------
-# 📌 Qdrant Vector Database
+# Default Owner Account
 # ------------------------------
-QDRANT_URL=https://your-qdrant-instance-url
+DEFAULT_ROLE=worker
+OWNER_NAME=your_name
+OWNER_EMAIL=your_email@example.com
+OWNER_USERNAME=admin
+OWNER_PASSWORD=your_password
+
+# ------------------------------
+# Database (Neon PostgreSQL)
+# ------------------------------
+DATABASE_URL=postgresql://<user>:<password>@<host>/<database>?sslmode=require
+
+# ------------------------------
+# Qdrant Vector Database
+# ------------------------------
+QDRANT_URL=https://your-qdrant-instance
 QDRANT_API_KEY=your_qdrant_api_key
-QDRANT_COLLECTION_NAME=ikip_documents
+```
 
-# ------------------------------
-# 📄 File Upload
-# ------------------------------
-MAX_UPLOAD_SIZE_MB=25
-UPLOAD_DIR=./uploads
+### Frontend (`frontend/.env`)
 
-# ------------------------------
-# 🌐 CORS
-# ------------------------------
-FRONTEND_URL=http://localhost:5173
+```env
+VITE_API_BASE=http://localhost:8000/api/v1
+```
+
+For production deployment, replace it with your deployed backend URL:
+
+```env
+VITE_API_BASE=https://your-render-backend.onrender.com/api/v1
 ```
 
 > [!IMPORTANT]
