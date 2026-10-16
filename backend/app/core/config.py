@@ -69,9 +69,7 @@ if not DATABASE_URL:
 
 DEFAULT_ROLE = os.getenv("DEFAULT_ROLE", "worker")
 
-# -------------------------
-# Groq
-# -------------------------
+# for Groq start all config
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
@@ -80,9 +78,7 @@ GROQ_MODEL = os.getenv(
     "llama-3.3-70b-versatile",
 )
 
-# -------------------------
 # Qdrant
-# -------------------------
 
 QDRANT_URL = os.getenv("QDRANT_URL", "")
 
@@ -93,18 +89,14 @@ QDRANT_COLLECTION = os.getenv(
     "industrial_documents",
 )
 
-# -------------------------
-# FastEmbed
-# -------------------------
+# for FastEmbed
 
 EMBEDDING_MODEL = os.getenv(
     "EMBEDDING_MODEL",
     "BAAI/bge-small-en-v1.5",
 )
 
-# -------------------------
-# Chunking
-# -------------------------
+# for Chunking start here
 
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "250"))
 
@@ -114,9 +106,8 @@ CHUNK_OVERLAP = int(
 
 TOP_K = int(os.getenv("TOP_K", "5"))
 
-# -------------------------
-# Default Owner
-# -------------------------
+
+# Default for owner
 
 OWNER_NAME = os.getenv("OWNER_NAME", "Owner")
 

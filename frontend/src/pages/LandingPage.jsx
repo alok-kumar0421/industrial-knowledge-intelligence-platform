@@ -17,6 +17,9 @@ import {
   LayoutDashboard,
   KeyRound,
   Users,
+  MessageCircle,
+  X,
+  Mail,
 } from "lucide-react";
 
 function useInView() {
@@ -62,7 +65,6 @@ function Reveal({ children, variant = "up", delay = 0, className = "" }) {
   );
 }
 
-// ---------- data ----------
 const PIPELINE = [
   { icon: UploadCloud, label: "PDF Upload" },
   { icon: FileSearch, label: "OCR (PyMuPDF)" },
@@ -122,7 +124,6 @@ const GROUNDING = [
 
 const STACK = ["React", "FastAPI", "PostgreSQL", "FastEmbed", "Qdrant Cloud", "Groq", "Render", "Netlify"];
 
-
 function AmbientBackground() {
   const particles = [
     { top: "12%", left: "8%", d: "0s", c: "#F2B705" },
@@ -134,7 +135,6 @@ function AmbientBackground() {
   ];
   return (
     <>
-      {/* blueprint grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
@@ -143,20 +143,16 @@ function AmbientBackground() {
           backgroundSize: "48px 48px",
         }}
       />
-      {/* ambient glow */}
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[#F2B705]/[0.08] blur-[130px]" />
 
-      {/* faint circuit traces */}
       <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.08]" preserveAspectRatio="none">
         <path d="M0,120 H220 V260 H520" stroke="#6FA8DC" strokeWidth="1" fill="none" />
         <path d="M0,420 H160" stroke="#6FA8DC" strokeWidth="1" fill="none" className="circuit-pulse" />
         <path d="M100%,180 H80% V60" stroke="#F2B705" strokeWidth="1" fill="none" transform="translate(-1,0)" />
       </svg>
 
-      {/* scan line */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 scan-line" />
 
-      {/* floating particles */}
       {particles.map((p, i) => (
         <span
           key={i}
@@ -168,12 +164,92 @@ function AmbientBackground() {
   );
 }
 
+function ChatWidget() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+      <div
+        className={`w-[340px] max-w-[calc(100vw-3rem)] origin-bottom-right rounded-2xl border border-[#F2B705]/40 bg-[#10141C] shadow-[0_0_40px_-10px_#F2B705] transition-all duration-300 ${
+          open ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-4 scale-95 opacity-0"
+        }`}
+      >
+        <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F2B705]/40 bg-[#F2B705]/[0.12]">
+              <Bot size={16} className="text-[#F2B705]" />
+            </span>
+            <span className="font-['JetBrains_Mono'] text-xs font-semibold tracking-[0.2em] text-white">
+              IKIP ASSISTANT
+            </span>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="text-[#8B93A1] transition-colors hover:text-white"
+            aria-label="Close chat"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <div className="px-5 py-5">
+          <div className="flex items-center gap-2 font-['JetBrains_Mono'] text-[10px] tracking-[0.2em] text-[#F2B705]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#F2B705]" />
+            IMPORTANT NOTICE
+          </div>
+
+          <div className="mt-5 space-y-5">
+            <div className="flex gap-4">
+              <span className="font-['JetBrains_Mono'] text-xs font-semibold text-[#F2B705]">01</span>
+              <p className="text-sm leading-relaxed text-[#EDEFF2]">
+                Create your account <strong className="font-semibold text-white">first by registering.</strong>
+              </p>
+            </div>
+
+            <div className="flex gap-4">
+              <span className="font-['JetBrains_Mono'] text-xs font-semibold text-[#F2B705]">02</span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm leading-relaxed text-[#EDEFF2]">
+                  Then, send a <strong className="font-semibold text-white">verification request</strong> to the Owner to get your account approved:
+                </p>
+                <div className="mt-3 flex items-center gap-2 rounded-md border border-[#6FA8DC]/30 bg-white/[0.04] px-3 py-2.5">
+                  <Mail size={14} className="shrink-0 text-[#6FA8DC]" />
+                  <span className="truncate font-['JetBrains_Mono'] text-xs text-[#6FA8DC]">
+                    alokshidharth01@gmail.com
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <span className="font-['JetBrains_Mono'] text-xs font-semibold text-[#F2B705]">03</span>
+              <p className="text-sm leading-relaxed text-[#EDEFF2]">
+                Once your account has been verified, <strong className="font-semibold text-white">Log in</strong> to access the Knowledge Base.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 border-t border-white/[0.08] pt-4 font-['JetBrains_Mono'] text-[10px] tracking-wide text-[#5C6472]">
+            * An AI-powered live chatbot is coming soon.
+          </div>
+        </div>
+      </div>
+
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-label={open ? "Close chat" : "Open chat"}
+        className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F2B705] text-[#0A0D12] shadow-[0_0_30px_-4px_#F2B705] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110"
+      >
+        {open ? <X size={26} /> : <MessageCircle size={26} />}
+      </button>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#0A0D12] font-['Inter'] text-[#EDEFF2]">
       <AmbientBackground />
 
-      {/* Navbar */}
       <nav className="relative z-10 mx-auto flex max-w-7xl items-center justify-between border-b border-white/[0.08] px-8 py-5">
         <div className="flex flex-col leading-none">
           <h1 className="font-['Oswald'] text-2xl font-bold tracking-wide text-[#F2B705]">IKIP</h1>
@@ -195,7 +271,6 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero */}
       <section className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-8 py-24 md:grid-cols-[1.15fr_0.85fr] md:py-28">
         <div>
           <Reveal variant="up">
@@ -245,7 +320,6 @@ export default function LandingPage() {
             </div>
           </Reveal>
 
-          {/* Tech badges */}
           <Reveal variant="up" delay={260}>
             <div className="mt-10 flex flex-wrap gap-2.5">
               {BADGES.map((b, i) => (
@@ -296,7 +370,6 @@ export default function LandingPage() {
         </Reveal>
       </section>
 
-      {/* Ticker */}
       <div className="relative z-10 flex overflow-hidden border-y border-white/[0.08] bg-white/[0.02] py-3">
         <div className="flex shrink-0 animate-[scroll_26s_linear_infinite] gap-10 whitespace-nowrap font-['JetBrains_Mono'] text-xs tracking-[0.2em] text-[#5C6472]">
           {Array(2).fill(0).map((_, i) => (
@@ -312,7 +385,6 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Feature nameplates */}
       <section className="relative z-10 mx-auto grid max-w-6xl gap-6 px-8 py-24 md:grid-cols-3">
         {FEATURES.map(({ icon: Icon, code, title, desc }, i) => (
           <Reveal key={code} variant="up" delay={i * 100}>
@@ -333,7 +405,6 @@ export default function LandingPage() {
         ))}
       </section>
 
-      {/* Full process — the actual AI workflow */}
       <section className="relative z-10 mx-auto max-w-4xl px-8 py-24">
         <Reveal variant="left">
           <span className="font-['JetBrains_Mono'] text-xs tracking-[0.2em] text-[#F2B705]">RAG&nbsp;WORKFLOW</span>
@@ -388,7 +459,6 @@ export default function LandingPage() {
         </Reveal>
       </section>
 
-      {/* Powered by — tech stack */}
       <section className="relative z-10 mx-auto max-w-6xl px-8 py-24">
         <Reveal variant="up">
           <span className="font-['JetBrains_Mono'] text-xs tracking-[0.2em] text-[#F2B705]">INFRASTRUCTURE</span>
@@ -410,7 +480,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Final CTA */}
       <section className="relative z-10 mx-auto max-w-6xl px-8 pb-28">
         <Reveal variant="scale">
           <div className="relative rounded-xl border border-[#F2B705]/30 bg-gradient-to-b from-[#F2B705]/[0.06] to-transparent px-8 py-16 text-center">
@@ -444,7 +513,6 @@ export default function LandingPage() {
         </Reveal>
       </section>
 
-      {/* Footer */}
       <footer className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-white/[0.08] px-8 py-6 font-['JetBrains_Mono'] text-[10px] tracking-[0.15em] text-[#5C6472] sm:flex-row">
         <span>IKIP&nbsp;INDUSTRIAL&nbsp;OS&nbsp;© 2026</span>
         <span className="flex items-center gap-2">
@@ -456,6 +524,8 @@ export default function LandingPage() {
           STATUS:&nbsp;OPERATIONAL
         </span>
       </footer>
+
+      <ChatWidget />
 
       <style>{`
         @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
